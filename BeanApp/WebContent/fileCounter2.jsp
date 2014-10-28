@@ -1,25 +1,29 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page import="java.io.*" %>
 <jsp:useBean id="count" class="mybean.fileCounter" scope="session"/>
-
+<jsp:setProperty property="jspInit" name="count" value="<%=path %>"/>
+<jsp:setProperty property="jspDestroy" name="count" value="<%=path %>"/>
 <!DOCTYPE html>
 <html>
 <head>
-<title>filrCounter.jsp</title>
+<title>fileCounter.jsp</title>
 </head>
 <body>
 
 <%!
 	String path;
-	int count1;
-	//mybean.fileCounter fc= new mybean.fileCounter();
 	public void jspInit(){
 		path = getServletContext().getRealPath("/");
+	} 
+	%>
+	<%  
+	if(session.isNew()){
+	%> 
+	<jsp:setProperty property="count" name="count" value="1"/>
+	<jsp:setProperty property="saveFile" name="count" value="<%=path %>"/>
+	<% 
 	}
-	
-%>
-	<jsp:setProperty property="path" name="count" value="<%=path %>"/>
-
-<h2>총 방문자 수 : <jsp:getProperty property="jspInit" name="count"/></h2>
+	%>
+<h2>총 방문자 수 : <jsp:getProperty property="count" name="count"/></h2>
 </body>
 </html>

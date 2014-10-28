@@ -80,26 +80,25 @@ try{
 	stmt=conn.createStatement();
 	String sql1 = "select code from tinput where code="+code;
 	out.println(sql1);
-	boolean s_code = stmt.
-	//rs=stmt.executeQuery(sql1);
+	
+	rs=stmt.executeQuery(sql1);
 	//pstmt = conn.prepareStatement(sql1);                          
 	//pstmt.setString(1, code);
 	//rs = pstmt.executeQuery();
-	//rs.next();
-	//int search_code = rs.getInt("code");
+	rs.next();
+	int s_code = rs.getInt("code");
 	out.println(s_code);
 	
 
 	//stmt=conn.createStatement();
 	String sql = "select code from tinput where name='"+name+"'";                        // sql 쿼리
 	out.println(sql);
-	boolean s_name = stmt.execute(sql);
 	rs=stmt.executeQuery(sql);
 	//pstmt = conn.prepareStatement(sql);                          // prepareStatement에서 해당 sql을 미리 컴파일한다.
 	//pstmt.setString(1, name);
 	//rs = pstmt.executeQuery();                                        // 쿼리를 실행하고 결과를 ResultSet 객체에 담는다.
-	//rs.next();
-	//int search_name = rs.getInt("code");  
+	rs.next();
+	int s_name = rs.getInt("code");  
 	out.println(s_name);
 
 	
@@ -119,20 +118,19 @@ try{
 	
 	String sql2 = "SELECT code from tinput where idate='"+idate+"'";
 	out.println(sql2);
-	boolean s_date = stmt.execute(sql2);
-	//rs=stmt.executeQuery(sql2);
+	rs=stmt.executeQuery(sql2);
 	//pstmt=conn.prepareStatement(sql2);
 	//pstmt.setString(1, idate);
 	//rs=pstmt.executeQuery();
-	//rs.next();
-	//int search_date = rs.getInt("code");
+	rs.next();
+	int s_date = rs.getInt("code");
 	out.println(s_date);
 	
-	conn.createStatement();
-	resultsql = "SELECT * FROM tinput WHERE code>0";
-	if(s_code){resultsql+=" AND code="+code;}
-	if(s_name){resultsql+=" AND name like '%"+name+"%'";}
-	if(s_date){resultsql+=" AND idate='"+idate+"'";}
+	//stmt=conn.createStatement();
+	resultsql = "SELECT * FROM tinput WHERE 1=1";
+	if(s_code>0){resultsql+=" AND code="+code;}
+	if(s_name>0){resultsql+=" AND name like '%"+name+"%'";}
+	if(s_date>0){resultsql+=" AND idate='"+idate+"'";}
 	out.println(resultsql);
 	
 	rs=stmt.executeQuery(resultsql);
@@ -159,10 +157,13 @@ try{
 	
 	
 }
+catch(NullPointerException err){
+	
+}
 catch(SQLException e){
-	String a = request.getParameter("name");
-	if(a != null)
-	out.println("입력된 값이 없거나 리스트에 없는 상품입니다.");
+String a = request.getParameter("name");
+if(a != null)
+out.println("입력된 값이 없거나 리스트에 없는 상품입니다.");
 }
 /* 
 try{

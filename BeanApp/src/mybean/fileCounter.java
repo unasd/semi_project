@@ -10,21 +10,7 @@ public class fileCounter {
 	PrintWriter pw;
 	String path;
 	
-	public void setPath(String path){
-		this.path = path;
-	}
-	
-	public String getPath(){
-		return path;
-	}
-	
-	public int getCount(){
-		return count;
-	}
-	
-	
-	public int getJspInit(){
-		//this.path = path;
+	public void setJspInit(String path){
 		try{
 			br = new BufferedReader(new FileReader(path+"\\counter.txt"));
 		
@@ -40,15 +26,15 @@ public class fileCounter {
 				catch(Exception err){err.printStackTrace();}
 			}
 		}
-		return count;
+		//System.out.println("jspinit : "+count);
+		//System.out.println("jspinit : "+path+"\\counter.txt.");
 	}
 	
-	public void setJspDestroy(boolean a){
-		//setSaveFile();
+	public void setJspDestroy(String path){
+		setSaveFile(path);
 	}
 	
 	public void setSaveFile(String path){
-		this.path = path;
 		try{
 			pw = new PrintWriter(path+"\\counter.txt");
 			pw.println(count);
@@ -64,8 +50,13 @@ public class fileCounter {
 		}
 	}
 	
-	public void setCount1(boolean count1){
-		count++;
-		System.out.println(count);
+	public void setCount(int count){
+		this.count++;
+		//System.out.println("setcount : "+this.count);
+	}
+	
+	public int getCount(){
+		//System.out.println("getcount : "+count);
+		return count;
 	}
 }
