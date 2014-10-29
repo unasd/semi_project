@@ -14,7 +14,6 @@
 	
 	int no = Integer.parseInt(request.getParameter("no"));
 	dto = (mybean.SawonDto)dao.getSawon(no);
-	//session.setAttribute("dto", dto);
 	
 %>
 <h1>사원 수정</h1>

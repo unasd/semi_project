@@ -8,15 +8,6 @@
 <jsp:useBean id="dto" class="mybean.SawonDto"></jsp:useBean>
 <jsp:setProperty property="*" name="dto"/>
 <%
-	/* 
-	dto.setId(request.getParameter("id"));
-	dto.setName(request.getParameter("name"));
-	dto.setPass(request.getParameter("pass"));
-	dto.setAge(Integer.parseInt(request.getParameter("age")));
-	dto.setAddr(request.getParameter("addr"));
-	dto.setExt(request.getParameter("ext"));
-	dto.setDept(request.getParameter("dept"));
-	 */
 	dao.addSawon(dto);
 %>
 
