@@ -1,8 +1,7 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page import="mybean.SawonDto" %>
-<%@ page import="java.util.List" %>
+<%@ page import="java.sql.*" %>
 <%@ page import="java.util.Vector" %>
-
+<%@ page import="mybean.SawonDto" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,9 +17,8 @@
 	</script>
 </head>
 <body>
-<jsp:useBean id="dao" class="mybean.SawonDao"></jsp:useBean>
+<jsp:useBean id="dao2" class="mybean.SawonDao2"></jsp:useBean>
 <jsp:useBean id="dto" class="mybean.SawonDto"></jsp:useBean>
-
 <h1>직원 정보 리스트</h1>
 <a href="addSawon.html">직원 추가</a>
 <br/><br/>
@@ -44,27 +42,28 @@
 	request.setCharacterEncoding("euc-kr");
 	String search = request.getParameter("search");
 	String searchText = request.getParameter("searchText");
-	Vector list = dao.getList(search, searchText);
-		
-		for(int i=0; i<list.size();i++){
-			dto =(SawonDto)list.get(i);	 // 인스턴스 생성
-			pageContext.setAttribute("dto", dto);		
+	
+	Vector list = dao2.getList(search, searchText);
+	for(int i=0;i<list.size();i++){
+		dto = (SawonDto)list.get(i);
+		pageContext.setAttribute("dto", dto);
+			%>
+			<tr>
+			<td><jsp:getProperty property="no" name="dto"/></td>
+			<td><jsp:getProperty property="id" name="dto"/></td>
+			<td><jsp:getProperty property="name" name="dto"/></td>
+			<td><jsp:getProperty property="pass" name="dto"/></td>
+			<td><jsp:getProperty property="age" name="dto"/></td>
+			<td><jsp:getProperty property="addr" name="dto"/></td>
+			<td><jsp:getProperty property="ext" name="dto"/></td>
+			<td><jsp:getProperty property="dept" name="dto"/></td>
+			<td><a href="editSawon.jsp?no=<%=dto.getNo()%>">수정</a></td>
+			<td><a href="javascript:fnDeleteChk('<%=dto.getNo()%>')">삭제</a></td>
+			</tr>
+		<% 
+		}	
 %>
-		<td><jsp:getProperty property="no" name="dto"/></td>
-		<td><jsp:getProperty property="id" name="dto"/></td>
-		<td><jsp:getProperty property="name" name="dto"/></td>
-		<td><jsp:getProperty property="pass" name="dto"/></td>
-		<td><jsp:getProperty property="age" name="dto"/></td>
-		<td><jsp:getProperty property="addr" name="dto"/></td>
-		<td><jsp:getProperty property="ext" name="dto"/></td>
-		<td><jsp:getProperty property="dept" name="dto"/></td>
-		<td><a href="editSawon.jsp?no=<%=dto.getNo()%>">수정</a></td>
-		<td><a href="javascript:fnDeleteChk('<%=dto.getNo()%>')">삭제</a></td>
-		</tr>
-<%		
-	}	
 
-%>
 </table>
 </body>
 </html>

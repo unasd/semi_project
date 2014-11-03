@@ -28,11 +28,11 @@ public class BoardDao {
 		String sql = null;
 		try{
 			if(keyWord==null || keyWord.isEmpty() || keyWord.equals("null")){
-				sql = "SELECT * FROM tblboard ORDER BY num desc";
+				sql = "SELECT * FROM tblboard ORDER BY pos";
 			}
 			else{
 				sql = "SELECT * FROM tblboard WHERE " + keyField +
-						" like '%" + keyWord + "%' ORDER BY num desc";
+						" like '%" + keyWord + "%' ORDER BY pos";
 			}
 			
 			con = pool.getConnection();
@@ -53,7 +53,6 @@ public class BoardDao {
 				dto.setPos(rs.getInt("pos"));
 				dto.setRegdate(rs.getString("regdate"));
 				dto.setSubject(rs.getString("subject"));
-				//System.out.println(rs.getString("subject"));
 				
 				v.add(dto);
 			}
@@ -69,6 +68,10 @@ public class BoardDao {
 		String sql = null;
 		try{
 			con=pool.getConnection();
+			sql ="UPDATE tblboard SET pos=pos+1";
+			pstmt=con.prepareStatement(sql);
+			pstmt.executeUpdate();
+			
 			sql ="INSERT INTO tblboard VALUES(seq_num.nextVal, ?, ?, "
 					+ "?, ?, ?, ?, 0, ?, sysdate, 0, 0)";
 			pstmt=con.prepareStatement(sql);
@@ -108,14 +111,14 @@ public class BoardDao {
 			while(rs.next()){
 				dto.setContent(rs.getString("content"));
 				dto.setCount(rs.getInt("count"));
-				//dto.setDepth(rs.getInt("depth"));
+				dto.setDepth(rs.getInt("depth"));
 				dto.setEmail(rs.getString("email"));
 				dto.setHomepage(rs.getString("homepage"));
 				dto.setIp(rs.getString("ip"));
 				dto.setName(rs.getString("name"));
 				dto.setNum(rs.getInt("num"));
 				dto.setPass(rs.getString("pass"));
-				//dto.setPos(rs.getInt("pos"));
+				dto.setPos(rs.getInt("pos"));
 				dto.setRegdate(rs.getString("regdate"));
 				dto.setSubject(rs.getString("subject"));
 			}
@@ -170,5 +173,63 @@ public class BoardDao {
 		finally{
 			pool.freeConnection(con, pstmt, rs);
 		}
+	}
+	
+	// 기존 글의 pos값 변경  
+	public void replyUpdatepos(BoardDto dto){ // 답변을 달려는 부모의 값
+		String sql=null;
+		try{
+			con=pool.getConnection();
+			sql ="UPDATE tblboard SET pos=pos+1 WHERE pos>?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, dto.getPos());
+			pstmt.executeUpdate();
+		}
+		catch(Exception err){
+			System.out.println("replyUpdatepos() : "+err);
+		}
+		finally{
+			pool.freeConnection(con, pstmt, rs);
+		}
+	}
+	
+	// 답변
+	public void replyBoard(BoardDto dto){ // 실제 답변의 값
+		String sql=null;
+		try{
+			//int pos = dto.getPos();
+			//int depth = dto.getDepth();
+			con=pool.getConnection();
+			sql = "insert into tblboard(num,name,email,homepage,"
+		               + "subject,content,pass,count,ip,regdate,pos,depth) values("
+		               + "seq_num.nextVal,?,?,?,?,?,?,0,?,sysdate,?,?)";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getEmail());
+			pstmt.setString(3, dto.getHomepage());
+			pstmt.setString(4, dto.getSubject());
+			pstmt.setString(5, dto.getContent());
+			pstmt.setString(6, dto.getPass());
+			pstmt.setString(7, dto.getIp());
+			pstmt.setInt(8, dto.getPos()+1);
+			pstmt.setInt(9, dto.getDepth()+1);
+			pstmt.executeUpdate();
+		}
+		catch(Exception err){
+			System.out.println("replyBoard() : "+err);
+		}
+		finally{
+			pool.freeConnection(con, pstmt, rs);
+		}
+	}
+	
+	// 들여 쓰기
+	public String useDepth(int depth){
+		String result ="";
+		for(int i=0; i<depth*3; i++){
+			result += "&nbsp;";
+		}
+		
+		return result;
 	}
 }

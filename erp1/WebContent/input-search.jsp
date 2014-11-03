@@ -91,7 +91,7 @@ try{
 	
 
 	//stmt=conn.createStatement();
-	String sql = "select code from tinput where name='"+name+"'";                        // sql 쿼리
+	String sql = "select code from tinput where name="+name;                        // sql 쿼리
 	out.println(sql);
 	rs=stmt.executeQuery(sql);
 	//pstmt = conn.prepareStatement(sql);                          // prepareStatement에서 해당 sql을 미리 컴파일한다.
@@ -129,7 +129,7 @@ try{
 	//stmt=conn.createStatement();
 	resultsql = "SELECT * FROM tinput WHERE 1=1";
 	if(s_code>0){resultsql+=" AND code="+code;}
-	if(s_name>0){resultsql+=" AND name like '%"+name+"%'";}
+	if(s_name>0){resultsql+=" AND name="+name;}
 	if(s_date>0){resultsql+=" AND idate='"+idate+"'";}
 	out.println(resultsql);
 	
@@ -158,7 +158,7 @@ try{
 	
 }
 catch(NullPointerException err){
-	
+	System.out.println(err);
 }
 catch(SQLException e){
 String a = request.getParameter("name");

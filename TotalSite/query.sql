@@ -23,3 +23,5 @@ INSERT INTO tblboard VALUES(seq_num.nextVal, 'bbb', 'bbb',
 'bbb', 'bbb', 'bbb', 'bbb', 0, 'bbb', sysdate, 0, 0);
 
 SELECT * from tblboard;
+
+delete from tblboard;

@@ -26,7 +26,7 @@
 	PreparedStatement pstmt=null;
 	ResultSet rs=null;
 	String getename=null, getgradename=null;
-	int getempno=0, getdeptno=0, getgradeno=0, getsal=0, panel=50000;
+	int getempno=0, getdeptno=0, getgradeno=0, getsal=0, penal=50000;
 	
 	String url="jdbc:mysql://localhost:3306/testboard";
 	String id="root";
@@ -80,7 +80,7 @@
 				<td><%=getdeptno %></td>
 				<td><%=getgradename %></td>
 				<td><%=getsal %></td>
-				<td><%=getsal-panel %></td>
+				<td><%=getsal-penal %></td>
 				</tr>
 				<%
 			}	
