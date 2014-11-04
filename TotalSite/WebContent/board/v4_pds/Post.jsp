@@ -2,6 +2,35 @@
 <html>
 <head><title>JSPBoard</title>
 <link href="style.css" rel="stylesheet" type="text/css">
+<script>
+	function fnAddFileInput(){
+		var cnt = document.post.add.value;
+		var div = document.getElementById("fileInputDiv");
+		div.innerHTML="";
+		
+		for(var i=0; i<cnt; i++){
+			var str="<input type='file' name='upfile"+i+"'/><br/><br/>";
+			div.innerHTML += str;
+		}
+	}
+	
+	function fnElementChk(f){ 
+		var cnt = f.elements.length; 
+		var paramIndex = 1;
+		
+		for(var i=0; i<cnt; i++){
+			if(f.elements[i].type=="file"){
+				if(f.elements[i].value == ""){
+					alert(paramIndex + "번째가 비어있음. \n제대로 입력해라.");
+					f.elements[i].focus(); 
+					return;	
+				}
+				paramIndex++;
+			}
+		}
+		f.submit();
+	}
+</script>
 </head>
 <body>
 <center>
@@ -13,7 +42,7 @@
 </table>
 <br>
 <table width=80% cellspacing=0 cellpadding=3 align=center>
-<form name=post method=post action="PostProc.jsp" >
+<form name=post method=post action="PostProc.jsp" enctype="multipart/form-data">
 <input type="hidden" name="ip" value="<%=request.getRemoteAddr() %>" />
  <tr>
   <td align=center>
@@ -42,12 +71,19 @@
      <td width=10%>비밀 번호</td> 
      <td width=90% ><input type=password name=pass size=15 maxlength=15></td>
     </tr>
+    
+    <tr>
+     <td width=10%>파일 첨부</td>
+     <td width=90% ><input type="file" name="upfile"/></td>
+    </tr>
+    
     <tr>
      <td colspan=2><hr size=1></td>
     </tr>
     <tr>
-     <td><input type=submit value="등록" >&nbsp;&nbsp;
-         <input type=reset value="다시쓰기">&nbsp;&nbsp;
+     <td><input type="submit" value="등록" />&nbsp;&nbsp;
+     <!-- <input type=button value="등록" onclick="fnElementChk(this.form)"/> -->
+         <input type=reset value="다시쓰기"/>&nbsp;&nbsp;
      </td>
     </tr> 
    </table>

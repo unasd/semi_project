@@ -1,9 +1,16 @@
 package totalsite.board;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Enumeration;
 import java.util.Vector;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import totalsite.dbcp.DBConnectionMgr;
 
@@ -73,7 +80,7 @@ public class BoardDao {
 			pstmt.executeUpdate();
 			
 			sql ="INSERT INTO tblboard VALUES(seq_num.nextVal, ?, ?, "
-					+ "?, ?, ?, ?, 0, ?, sysdate, 0, 0)";
+					+ "?, ?, ?, ?, 0, ?, sysdate, 0, 0, ?, ?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, dto.getName());
 			pstmt.setString(2, dto.getEmail());
@@ -82,6 +89,8 @@ public class BoardDao {
 			pstmt.setString(5, dto.getContent());
 			pstmt.setString(6, dto.getPass());
 			pstmt.setString(7, dto.getIp());
+			pstmt.setString(8, dto.getFilename());
+			pstmt.setString(9, dto.getOfilename());
 			pstmt.executeUpdate();
 		}
 		catch(Exception err){
@@ -121,6 +130,8 @@ public class BoardDao {
 				dto.setPos(rs.getInt("pos"));
 				dto.setRegdate(rs.getString("regdate"));
 				dto.setSubject(rs.getString("subject"));
+				dto.setFilename(rs.getString("filename"));
+				dto.setOfilename(rs.getString("ofilename"));
 			}
 		}
 		catch(Exception err){

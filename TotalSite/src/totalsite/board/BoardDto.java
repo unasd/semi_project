@@ -2,6 +2,8 @@ package totalsite.board;
 
 import java.util.Date;
 
+import com.oreilly.servlet.MultipartRequest;
+
 public class BoardDto {
 	private int num;
 	private String name;
@@ -15,8 +17,22 @@ public class BoardDto {
 	private String regdate;
 	private int pos;
 	private int depth;	
+	private String filename;
+	private String ofilename;
 	
 	
+	public String getOfilename() {
+		return ofilename;
+	}
+	public void setOfilename(String ofilename) {
+		this.ofilename = ofilename;
+	}
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 	public int getNum() {
 		return num;
 	}

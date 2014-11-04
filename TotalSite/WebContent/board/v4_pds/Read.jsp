@@ -52,6 +52,14 @@
      <%=dto.getIp() %>&nbsp;&nbsp;로 부터 글을 남기셨습니다./  조회수 : <%=dto.getCount() %>
     </td>
    </tr>
+  
+   <tr>
+   <td colspan=4 align=left>
+     <hr size=1>
+     첨부파일 <a href="download.jsp?name=<%=dto.getFilename()%>"><%=dto.getOfilename() %></a><br/>
+    </td>
+   </tr>
+  <%--  <%=path+"/"+dto.getFilename()%> --%>
    </table>
   </td>
  </tr>
