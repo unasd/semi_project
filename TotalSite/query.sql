@@ -11,6 +11,8 @@ CREATE TABLE tblBoard(
 	regdate		date,					--등록일
 	pos			number,					--답변글의 위치
 	depth		number,					--답변글의 레벨
+	filename	varchar2(100),
+	ofilename	varchat2(20)
 	CONSTRAINT pk_num	PRIMARY KEY(num)
 );
 

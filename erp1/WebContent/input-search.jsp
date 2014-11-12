@@ -67,74 +67,28 @@ try{
 	conn=DriverManager.getConnection(url,id,pw); 
 	response.setCharacterEncoding("euc-kr");
 	request.setCharacterEncoding("euc-kr");
-	/* String a = ;	
-	String c = request.getParameter("name"); */	
-	String code = request.getParameter("code");
-	out.println(code);
-	String name = request.getParameter("name");
-	out.println(name);
-	String idate = request.getParameter("idate");
-	out.println(idate);
-	
-	
-	stmt=conn.createStatement();
-	String sql1 = "select code from tinput where code="+code;
-	out.println(sql1);
-	
-	rs=stmt.executeQuery(sql1);
-	//pstmt = conn.prepareStatement(sql1);                          
-	//pstmt.setString(1, code);
-	//rs = pstmt.executeQuery();
-	rs.next();
-	int s_code = rs.getInt("code");
-	out.println(s_code);
-	
 
-	//stmt=conn.createStatement();
-	String sql = "select code from tinput where name="+name;                        // sql 쿼리
-	out.println(sql);
-	rs=stmt.executeQuery(sql);
-	//pstmt = conn.prepareStatement(sql);                          // prepareStatement에서 해당 sql을 미리 컴파일한다.
-	//pstmt.setString(1, name);
-	//rs = pstmt.executeQuery();                                        // 쿼리를 실행하고 결과를 ResultSet 객체에 담는다.
-	rs.next();
-	int s_name = rs.getInt("code");  
-	out.println(s_name);
-
+	String code =null;
+	String name =null;
+	String idate =null;
 	
+	code = request.getParameter("code");
+	name = request.getParameter("name");
+	idate = request.getParameter("idate");
+	//out.println("code : "+code+"<br/>");
+	//out.println("name : "+name+"<br/>");
+	//out.println("idate : "+idate+"<br/>");
 	
-	/* 
-	while(rs.next()){                                                        // 결과를 한 행씩 돌아가면서 가져온다.
-		int code = rs.getInt("code");
-		String name = rs.getString("name");
-		int icount = rs.getInt("icount");
-		Date idate = rs.getDate("idate");
-		 */
-
-		//} // while 끝
-	//String b = request.getParameter("code");
-	//String sql1 = "select * from tinput where ((instr(name , ? , 1))>0)";// sql 쿼리
-	
-	
-	String sql2 = "SELECT code from tinput where idate='"+idate+"'";
-	out.println(sql2);
-	rs=stmt.executeQuery(sql2);
-	//pstmt=conn.prepareStatement(sql2);
-	//pstmt.setString(1, idate);
-	//rs=pstmt.executeQuery();
-	rs.next();
-	int s_date = rs.getInt("code");
-	out.println(s_date);
-	
-	//stmt=conn.createStatement();
+	if(!(code=="" && name=="" && idate=="")){
 	resultsql = "SELECT * FROM tinput WHERE 1=1";
-	if(s_code>0){resultsql+=" AND code="+code;}
-	if(s_name>0){resultsql+=" AND name="+name;}
-	if(s_date>0){resultsql+=" AND idate='"+idate+"'";}
-	out.println(resultsql);
-	
+	if(code!=""){resultsql+=" AND code="+code;}
+	if(name!=""){resultsql+=" AND name='"+name+"'";}
+	if(idate!=""){resultsql+=" AND idate='"+idate+"'";}
+	out.println(resultsql+"<br/>");
+	stmt=conn.createStatement();
 	rs=stmt.executeQuery(resultsql);
-	out.println(resultsql);
+	out.println("resultsql : "+resultsql+"<br/>");
+	
 	while(rs.next()){
 		int code1 = rs.getInt("code");
 		String name1 = rs.getString("name");
@@ -151,11 +105,11 @@ try{
 		</tr>
 		<%
 	}
-	
-	
-	
-	
-	
+ 	
+	}
+	else{
+		out.println("검색결과가 없음");
+	}
 }
 catch(NullPointerException err){
 	System.out.println(err);
@@ -165,44 +119,14 @@ String a = request.getParameter("name");
 if(a != null)
 out.println("입력된 값이 없거나 리스트에 없는 상품입니다.");
 }
-/* 
-try{
-	String sql1 = "select code from tinput where code = ?";
-	pstmt = conn.prepareStatement(sql1);                          
-	pstmt.setString(1,request.getParameter("code"));
-	rs = pstmt.executeQuery();
-	rs.next();
-	int search_code = rs.getInt("code");
-	
-	String sql2 = "SELECT code from tinput where idate=?";
-	pstmt=conn.prepareStatement(sql2);
-	pstmt.setString(1, request.getParameter("idate"));
-	rs=pstmt.executeQuery();
-	rs.next();
-	int search_date = rs.getInt("idate");
-	
-	
-	
-	 while(rs.next()){                                             
-		int code = rs.getInt("code");
-		String name = rs.getString("name");
-		int icount = rs.getInt("icount");
-		Date idate = rs.getDate("idate");
-	
 
-		} 	// while 끝
-
-
-	}
-	catch(Exception e){
-	
-	}
- */
 	finally	{                                                            // 쿼리가 성공 또는 실패에 상관없이 사용한 자원을 해제 한다.  (순서중요)
 		if(rs != null) try{rs.close();}catch(SQLException sqle){}            // Resultset 객체 해제
 		if(pstmt != null) try{pstmt.close();}catch(SQLException sqle){}   // PreparedStatement 객체 해제
 		if(conn != null) try{conn.close();}catch(SQLException sqle){}   // Connection 해제
 	}
+
+	 
 %>
 </table>
 </body>

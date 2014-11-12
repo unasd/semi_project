@@ -6,9 +6,12 @@ import java.util.Vector;
 
 public class DBConnectionMgr {
     private Vector connections = new Vector(10);	
-	 private String _driver = "oracle.jdbc.driver.OracleDriver",
+    private String _driver = "oracle.jdbc.driver.OracleDriver",
     _url = "jdbc:oracle:thin:@localhost:1521:orcl",
     _user = "scott", _password = "1111";
+    //private String _driver = "org.gjt.mm.mysql.Driver",
+    //_url = "jdbc:mysql://localhost:3306/dbL3",
+    //_user = "root", _password = "1111";
     private boolean _traceOn = false;
     private boolean initialized = false;
     private int _openConnections = 10;
