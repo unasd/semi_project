@@ -74,15 +74,7 @@ public class InputCommand implements Command {
 				pstmt.setInt(5, stockdto.getDes());
 				pstmt.executeUpdate();
 			}
-
-			sql = "INSERT INTO tinput VALUES(?, ?, ?, ?, ?)";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, stockdto.getCode());
-			pstmt.setString(2, stockdto.getName());
-			pstmt.setInt(3, stockdto.getCount());
-			pstmt.setString(4, stockdto.getIdate());
-			pstmt.setInt(5, stockdto.getDes());
-			pstmt.executeUpdate();
+			
 		} catch (Exception err) {
 			err.printStackTrace();
 			//System.out.println("addInput() : " + err);

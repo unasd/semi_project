@@ -1,4 +1,5 @@
 <%@page contentType="text/html;charset=euc-kr" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style type="text/css">
 .css1{
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -72,7 +73,8 @@
 	</div>
 	
 	</div>
-	
+	<c:set var="i" value="test"/>
+	<c:if test="${i=='test' }">
 	<div id="tabs-2">
 		<div style="float: left">	
 		<form method="post" action="input-search.jsp">
@@ -94,7 +96,7 @@
 		</form>
 		</div>
 	</div>
-	
+	</c:if>
 	
 	<div id="tabs-3">
 		<div style="float: left">

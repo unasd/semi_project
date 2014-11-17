@@ -3,6 +3,7 @@ package semi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class StockDao {
 	private Connection con;
@@ -206,5 +207,10 @@ public class StockDao {
 		} finally {
 			pool.freeConnection(con, pstmt, rs);
 		}
+	}
+	
+	public ArrayList getList(){
+		ArrayList list = new ArrayList();
+		return list;
 	}
 }
